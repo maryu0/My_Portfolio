@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Ayush Portfolio V2 - Music Edition
 
 A modern, music-themed portfolio website built with React, TypeScript, and Tailwind CSS.
@@ -53,4 +52,3 @@ npm run build
 MIT
 =======
 # My_Portfolio
->>>>>>> f0b1e7d6ad7487d63c1aa2e7244c66026b1e3a13
