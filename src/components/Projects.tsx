@@ -9,6 +9,7 @@ interface Project {
   album: string; // Project type
   duration: string; // Timeline
   cover: string; // Color gradient
+  image?: string; // Project screenshot
   tech: string[];
   description: string;
   github?: string;
@@ -24,6 +25,7 @@ const projects: Project[] = [
     album: "Finance App",
     duration: "3:45",
     cover: "from-neon-orange to-neon-pink",
+    image: "/cashcompass.png",
     tech: ["React", "Node.js", "MongoDB", "Express"],
     description:
       "A comprehensive finance tracking application to manage and monitor your expenses and budgets",
@@ -37,6 +39,7 @@ const projects: Project[] = [
     album: "AgriTech Platform",
     duration: "4:20",
     cover: "from-neon-blue to-neon-cyan",
+    image: "/vriddhi.png",
     tech: ["React", "Node.js", "MongoDB", "TensorFlow", "CNN"],
     description:
       "AI-powered agricultural platform with CNN-based crop disease detection and real-time market insights",
@@ -50,6 +53,7 @@ const projects: Project[] = [
     album: "Landing Page",
     duration: "2:30",
     cover: "from-neon-pink to-neon-blue",
+    image: "/natours.png",
     tech: ["HTML5", "SCSS", "CSS Animations"],
     description:
       "Modern responsive landing page for a tour booking website with advanced CSS animations and effects",
@@ -62,6 +66,7 @@ const projects: Project[] = [
     album: "Recipe App",
     duration: "3:15",
     cover: "from-neon-cyan to-neon-yellow",
+    image: "/forkify.png",
     tech: ["JavaScript", "Webpack", "API Integration"],
     description:
       "Recipe search application with bookmarking and custom recipe creation features using Forkify API",
@@ -129,19 +134,33 @@ const ProjectCard = ({
       }`}
     >
       <div className="relative bg-vinyl-light border border-vinyl-accent hover:border-neon-orange transition-all duration-300 rounded-lg overflow-hidden">
-        {/* Album Art */}
+        {/* Album Art / Project Image */}
         <div
           className={`relative ${
             project.featured ? "h-80" : "h-64"
-          } bg-gradient-to-br ${
-            project.cover
-          } opacity-20 group-hover:opacity-30 transition-opacity`}
+          } overflow-hidden`}
         >
-          <div className="absolute inset-0 noise-texture" />
+          {/* Background gradient as fallback */}
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${project.cover} opacity-30`}
+          />
+
+          {/* Project Image */}
+          {project.image && (
+            <img
+              src={project.image}
+              alt={project.title}
+              className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+            />
+          )}
+
+          {/* Overlay gradient for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-vinyl-dark/80 via-vinyl-dark/20 to-transparent" />
+          <div className="absolute inset-0 noise-texture opacity-30" />
 
           {/* Play Button Overlay */}
           <motion.button
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-neon-orange/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 rounded-full bg-neon-orange/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsPlaying(!isPlaying)}
@@ -154,13 +173,13 @@ const ProjectCard = ({
           </motion.button>
 
           {/* Track Number */}
-          <div className="absolute top-4 left-4 font-display text-6xl text-album-beige/30">
+          <div className="absolute top-4 left-4 font-display text-6xl text-album-beige/50 z-10">
             {String(project.id).padStart(2, "0")}
           </div>
 
           {/* Featured Badge */}
           {project.featured && (
-            <div className="absolute top-4 right-4 px-3 py-1 bg-neon-orange text-vinyl-dark font-mono text-xs tracking-wider rounded-full">
+            <div className="absolute top-4 right-4 px-3 py-1 bg-neon-orange text-vinyl-dark font-mono text-xs tracking-wider rounded-full z-10">
               FEATURED
             </div>
           )}

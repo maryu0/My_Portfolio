@@ -24,51 +24,120 @@ const VinylBackground = () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Particle system
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      color: string;
-      life: number;
-      maxLife: number;
-    }> = [];
+    // Audio visualizer bars data
+    const numBars = 64;
+    const barHeights: number[] = Array(numBars).fill(0);
+    const targetHeights: number[] = Array(numBars).fill(0);
 
-    const colors = [
-      "rgba(255, 107, 53, ", // neon-orange
-      "rgba(255, 64, 129, ", // neon-pink
-      "rgba(0, 229, 255, ", // neon-cyan
-      "rgba(255, 215, 0, ", // neon-yellow
-    ];
+    // Sound wave points
+    const wavePoints = 100;
 
-    // Create initial particles
-    for (let i = 0; i < 50; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 3 + 1,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        life: Math.random() * 100,
-        maxLife: 100 + Math.random() * 100,
-      });
-    }
-
-    // Create vinyl grooves pattern with particles
     const draw = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
-      const time = Date.now() * 0.0001;
+      const time = Date.now() * 0.001;
 
-      // Draw expanding pulse rings
-      for (let p = 0; p < 3; p++) {
-        const pulseRadius = (time * 500 + p * 200) % 800;
-        const pulseOpacity = Math.max(0, 0.15 - pulseRadius / 5000);
+      // Update equalizer bar heights with smooth animation
+      for (let i = 0; i < numBars; i++) {
+        // Create rhythmic pattern
+        const frequency = 0.5 + (i / numBars) * 2;
+        const phase = i * 0.3;
+        targetHeights[i] =
+          30 +
+          Math.sin(time * frequency + phase) * 40 +
+          Math.sin(time * 1.5 + phase * 0.5) * 30 +
+          Math.cos(time * 0.8 + i * 0.2) * 20;
+
+        // Smooth interpolation
+        barHeights[i] += (targetHeights[i] - barHeights[i]) * 0.1;
+      }
+
+      // Draw circular equalizer around center
+      const eqRadius = 200;
+      for (let i = 0; i < numBars; i++) {
+        const angle = (i / numBars) * Math.PI * 2 - Math.PI / 2;
+        const barHeight = barHeights[i];
+
+        const x1 = centerX + Math.cos(angle) * eqRadius;
+        const y1 = centerY + Math.sin(angle) * eqRadius;
+        const x2 = centerX + Math.cos(angle) * (eqRadius + barHeight);
+        const y2 = centerY + Math.sin(angle) * (eqRadius + barHeight);
+
+        const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+        gradient.addColorStop(0, "rgba(255, 107, 53, 0.3)");
+        gradient.addColorStop(0.5, "rgba(255, 64, 129, 0.4)");
+        gradient.addColorStop(1, "rgba(0, 229, 255, 0.3)");
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth = 3;
+        ctx.lineCap = "round";
+        ctx.stroke();
+      }
+
+      // Draw inner vinyl record
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, eqRadius - 10, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(255, 107, 53, 0.1)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw vinyl grooves
+      for (let i = 1; i <= 8; i++) {
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, eqRadius - 20 - i * 15, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(255, 107, 53, ${
+          0.05 + Math.sin(time + i) * 0.02
+        })`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // Center vinyl label
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, 40, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255, 107, 53, 0.15)";
+      ctx.fill();
+      ctx.strokeStyle = "rgba(255, 107, 53, 0.3)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw sound waves on left side
+      ctx.beginPath();
+      ctx.moveTo(0, centerY);
+      for (let i = 0; i <= wavePoints; i++) {
+        const x = (i / wavePoints) * (canvas.width * 0.3);
+        const amplitude = 30 + Math.sin(time * 2 + i * 0.1) * 20;
+        const y = centerY + Math.sin(time * 3 + i * 0.15) * amplitude;
+        ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = "rgba(0, 229, 255, 0.15)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw sound waves on right side
+      ctx.beginPath();
+      ctx.moveTo(canvas.width, centerY);
+      for (let i = 0; i <= wavePoints; i++) {
+        const x = canvas.width - (i / wavePoints) * (canvas.width * 0.3);
+        const amplitude = 30 + Math.cos(time * 2 + i * 0.1) * 20;
+        const y = centerY + Math.sin(time * 3 + i * 0.15 + 1) * amplitude;
+        ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = "rgba(255, 64, 129, 0.15)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Draw beat pulse rings
+      for (let p = 0; p < 4; p++) {
+        const beatTime = (time * 2 + p * 0.5) % 2;
+        const pulseRadius = beatTime * 150 + eqRadius + 50;
+        const pulseOpacity = Math.max(0, 0.2 - beatTime * 0.1);
+
         ctx.beginPath();
         ctx.arc(centerX, centerY, pulseRadius, 0, Math.PI * 2);
         ctx.strokeStyle = `rgba(255, 107, 53, ${pulseOpacity})`;
@@ -76,81 +145,49 @@ const VinylBackground = () => {
         ctx.stroke();
       }
 
-      // Draw vinyl grooves
-      for (let i = 0; i < 50; i++) {
-        const radius = 100 + i * 20;
-        const opacity = 0.03 + Math.sin(time + i * 0.1) * 0.02;
-        const wobble = Math.sin(time * 2 + i * 0.2) * 2;
+      // Draw frequency spectrum at bottom
+      const spectrumWidth = canvas.width * 0.6;
+      const spectrumX = (canvas.width - spectrumWidth) / 2;
+      const spectrumY = canvas.height - 80;
+      const barWidth = spectrumWidth / 32;
 
-        ctx.beginPath();
-        ctx.arc(centerX + wobble, centerY + wobble, radius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255, 107, 53, ${opacity})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
+      for (let i = 0; i < 32; i++) {
+        const height = barHeights[i * 2] * 0.5;
+        const x = spectrumX + i * barWidth;
+
+        const gradient = ctx.createLinearGradient(
+          x,
+          spectrumY,
+          x,
+          spectrumY - height
+        );
+        gradient.addColorStop(0, "rgba(255, 107, 53, 0.4)");
+        gradient.addColorStop(1, "rgba(0, 229, 255, 0.2)");
+
+        ctx.fillStyle = gradient;
+        ctx.fillRect(x + 2, spectrumY - height, barWidth - 4, height);
       }
 
-      // Update and draw particles
-      particles.forEach((particle, index) => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        particle.life += 1;
+      // Mirror spectrum at top
+      for (let i = 0; i < 32; i++) {
+        const height = barHeights[i * 2] * 0.3;
+        const x = spectrumX + i * barWidth;
 
-        // Reset particle if it goes off screen or dies
-        if (
-          particle.x < 0 ||
-          particle.x > canvas.width ||
-          particle.y < 0 ||
-          particle.y > canvas.height ||
-          particle.life > particle.maxLife
-        ) {
-          particles[index] = {
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
-            size: Math.random() * 3 + 1,
-            color: colors[Math.floor(Math.random() * colors.length)],
-            life: 0,
-            maxLife: 100 + Math.random() * 100,
-          };
-        }
+        const gradient = ctx.createLinearGradient(x, 80, x, 80 + height);
+        gradient.addColorStop(0, "rgba(255, 64, 129, 0.3)");
+        gradient.addColorStop(1, "rgba(255, 107, 53, 0.1)");
 
-        const lifeRatio = 1 - particle.life / particle.maxLife;
-        const opacity = lifeRatio * 0.6;
+        ctx.fillStyle = gradient;
+        ctx.fillRect(x + 2, 80, barWidth - 4, height);
+      }
 
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = particle.color + opacity + ")";
-        ctx.fill();
-
-        // Draw connecting lines between nearby particles
-        particles.forEach((other, otherIndex) => {
-          if (index !== otherIndex) {
-            const dx = particle.x - other.x;
-            const dy = particle.y - other.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 150) {
-              ctx.beginPath();
-              ctx.moveTo(particle.x, particle.y);
-              ctx.lineTo(other.x, other.y);
-              ctx.strokeStyle = `rgba(255, 107, 53, ${
-                0.05 * (1 - distance / 150)
-              })`;
-              ctx.lineWidth = 0.5;
-              ctx.stroke();
-            }
-          }
-        });
-      });
-
-      // Draw gradient orbs that follow mouse slightly
+      // Draw gradient orb following mouse
       const orbX = centerX + (mousePosition.x - centerX) * 0.05;
       const orbY = centerY + (mousePosition.y - centerY) * 0.05;
 
       const gradient = ctx.createRadialGradient(orbX, orbY, 0, orbX, orbY, 300);
-      gradient.addColorStop(0, "rgba(255, 107, 53, 0.1)");
-      gradient.addColorStop(0.5, "rgba(255, 64, 129, 0.05)");
+      gradient.addColorStop(0, "rgba(255, 107, 53, 0.08)");
+      gradient.addColorStop(0.5, "rgba(255, 64, 129, 0.04)");
       gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -174,70 +211,96 @@ const VinylBackground = () => {
       <canvas ref={canvasRef} className="absolute inset-0 opacity-30" />
       <div className="absolute inset-0 vinyl-gradient noise-texture" />
 
-      {/* Left Side Decorations */}
-      <div className="fixed left-0 top-0 bottom-0 w-20 pointer-events-none hidden lg:flex flex-col justify-center items-center gap-8">
-        {/* Vertical Line */}
-        <div className="absolute left-8 top-1/4 bottom-1/4 w-[1px] bg-gradient-to-b from-transparent via-neon-orange/30 to-transparent" />
-
-        {/* Decorative Dots */}
-        {[...Array(5)].map((_, i) => (
+      {/* Left Side - Equalizer Bars */}
+      <div className="fixed left-4 top-1/2 -translate-y-1/2 flex items-end gap-1 pointer-events-none hidden lg:flex h-40">
+        {[...Array(8)].map((_, i) => (
           <motion.div
-            key={`left-dot-${i}`}
-            className="w-2 h-2 rounded-full bg-neon-orange/40"
+            key={`left-eq-${i}`}
+            className="w-1 bg-gradient-to-t from-neon-orange to-neon-pink rounded-full"
             animate={{
-              opacity: [0.2, 0.6, 0.2],
-              scale: [1, 1.2, 1],
+              height: [20, 40 + Math.random() * 60, 30, 80, 20],
             }}
             transition={{
-              duration: 2,
-              delay: i * 0.3,
+              duration: 1 + i * 0.1,
+              delay: i * 0.1,
               repeat: Infinity,
               ease: "easeInOut",
             }}
+            style={{ opacity: 0.4 }}
           />
         ))}
-
-        {/* Rotating Element */}
-        <motion.div
-          className="absolute left-4 top-1/3 w-8 h-8 border border-neon-cyan/20 rounded-full"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        >
-          <div className="absolute top-0 left-1/2 w-1 h-1 bg-neon-cyan/50 rounded-full -translate-x-1/2" />
-        </motion.div>
       </div>
 
-      {/* Right Side Decorations */}
-      <div className="fixed right-0 top-0 bottom-0 w-20 pointer-events-none hidden lg:flex flex-col justify-center items-center gap-8">
-        {/* Vertical Line */}
-        <div className="absolute right-8 top-1/4 bottom-1/4 w-[1px] bg-gradient-to-b from-transparent via-neon-pink/30 to-transparent" />
-
-        {/* Decorative Dots */}
-        {[...Array(5)].map((_, i) => (
+      {/* Right Side - Equalizer Bars */}
+      <div className="fixed right-4 top-1/2 -translate-y-1/2 flex items-end gap-1 pointer-events-none hidden lg:flex h-40">
+        {[...Array(8)].map((_, i) => (
           <motion.div
-            key={`right-dot-${i}`}
-            className="w-2 h-2 rounded-full bg-neon-pink/40"
+            key={`right-eq-${i}`}
+            className="w-1 bg-gradient-to-t from-neon-cyan to-neon-blue rounded-full"
             animate={{
-              opacity: [0.2, 0.6, 0.2],
-              scale: [1, 1.2, 1],
+              height: [30, 60 + Math.random() * 40, 20, 70, 30],
             }}
             transition={{
-              duration: 2,
-              delay: i * 0.3 + 0.5,
+              duration: 1.2 + i * 0.1,
+              delay: i * 0.15,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{ opacity: 0.4 }}
+          />
+        ))}
+      </div>
+
+      {/* Left Side - Sound Wave Lines */}
+      <div className="fixed left-8 top-1/4 pointer-events-none hidden lg:block">
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={`wave-left-${i}`}
+            className="absolute w-16 h-[2px] rounded-full"
+            style={{
+              top: i * 20,
+              background: `linear-gradient(90deg, transparent, rgba(255,107,53,${
+                0.3 - i * 0.05
+              }), transparent)`,
+            }}
+            animate={{
+              scaleX: [0.5, 1, 0.5],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 1.5,
+              delay: i * 0.2,
               repeat: Infinity,
               ease: "easeInOut",
             }}
           />
         ))}
+      </div>
 
-        {/* Rotating Element */}
-        <motion.div
-          className="absolute right-4 top-2/3 w-8 h-8 border border-neon-orange/20 rounded-full"
-          animate={{ rotate: -360 }}
-          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-        >
-          <div className="absolute top-0 left-1/2 w-1 h-1 bg-neon-orange/50 rounded-full -translate-x-1/2" />
-        </motion.div>
+      {/* Right Side - Sound Wave Lines */}
+      <div className="fixed right-8 bottom-1/4 pointer-events-none hidden lg:block">
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={`wave-right-${i}`}
+            className="absolute w-16 h-[2px] rounded-full"
+            style={{
+              top: i * 20,
+              background: `linear-gradient(90deg, transparent, rgba(0,229,255,${
+                0.3 - i * 0.05
+              }), transparent)`,
+            }}
+            animate={{
+              scaleX: [0.5, 1, 0.5],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 1.5,
+              delay: i * 0.2 + 0.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
       </div>
 
       {/* Top Corner Decorations */}
@@ -396,69 +459,150 @@ const VinylBackground = () => {
         }}
       />
 
-      {/* Floating Music Notes */}
-      {[...Array(8)].map((_, i) => (
+      {/* Floating Music Notes - Multiple Types */}
+      {["♪", "♫", "♩", "♬", "🎵", "♪", "♫", "♩"].map((note, i) => (
         <motion.div
           key={`note-${i}`}
-          className="fixed text-neon-orange/20 text-2xl pointer-events-none hidden lg:block"
+          className="fixed text-2xl pointer-events-none hidden lg:block"
           style={{
-            left: `${10 + i * 12}%`,
-            top: `${20 + (i % 3) * 25}%`,
+            left: `${8 + i * 12}%`,
+            top: `${15 + (i % 4) * 20}%`,
+            color:
+              i % 2 === 0
+                ? "rgba(255, 107, 53, 0.25)"
+                : "rgba(0, 229, 255, 0.25)",
           }}
           animate={{
-            y: [0, -30, 0],
-            x: [0, i % 2 === 0 ? 15 : -15, 0],
-            opacity: [0.1, 0.3, 0.1],
-            rotate: [0, i % 2 === 0 ? 10 : -10, 0],
+            y: [0, -40, 0],
+            x: [0, i % 2 === 0 ? 20 : -20, 0],
+            opacity: [0.15, 0.35, 0.15],
+            rotate: [0, i % 2 === 0 ? 15 : -15, 0],
+            scale: [1, 1.2, 1],
           }}
           transition={{
             duration: 4 + i * 0.5,
-            delay: i * 0.3,
+            delay: i * 0.4,
             repeat: Infinity,
             ease: "easeInOut",
           }}
         >
-          ♪
+          {note}
         </motion.div>
       ))}
 
-      {/* Horizontal Scan Lines */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden opacity-[0.02]">
-        {[...Array(50)].map((_, i) => (
+      {/* Floating Headphones Icon */}
+      <motion.div
+        className="fixed top-20 right-20 text-4xl pointer-events-none hidden lg:block opacity-20"
+        animate={{
+          y: [0, -15, 0],
+          rotate: [-5, 5, -5],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        🎧
+      </motion.div>
+
+      {/* Floating Microphone Icon */}
+      <motion.div
+        className="fixed bottom-32 left-20 text-3xl pointer-events-none hidden lg:block opacity-20"
+        animate={{
+          y: [0, -10, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 3,
+          delay: 1,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        🎤
+      </motion.div>
+
+      {/* Waveform Lines - Top */}
+      <div className="fixed top-16 left-1/2 -translate-x-1/2 flex items-center gap-[2px] pointer-events-none hidden lg:flex">
+        {[...Array(40)].map((_, i) => (
           <motion.div
-            key={`scanline-${i}`}
-            className="absolute w-full h-[1px] bg-white"
-            style={{ top: `${i * 2}%` }}
+            key={`wave-top-${i}`}
+            className="w-[3px] bg-gradient-to-b from-neon-orange/30 to-transparent rounded-full"
             animate={{
-              opacity: [0.5, 1, 0.5],
+              height: [5, 15 + Math.sin(i * 0.5) * 20, 5],
             }}
             transition={{
-              duration: 2,
-              delay: i * 0.05,
+              duration: 0.8,
+              delay: i * 0.03,
               repeat: Infinity,
-              ease: "linear",
+              ease: "easeInOut",
             }}
           />
         ))}
       </div>
 
-      {/* Glowing Stars */}
-      {[...Array(15)].map((_, i) => (
+      {/* Volume Bars - Bottom Left Corner */}
+      <div className="fixed bottom-8 left-8 flex items-end gap-1 pointer-events-none hidden lg:flex">
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={`vol-${i}`}
+            className="w-2 bg-neon-cyan/40 rounded-sm"
+            animate={{
+              height: [8, 8 + i * 6, 8],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 1.5,
+              delay: i * 0.1,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Audio Spectrum - Bottom Right Corner */}
+      <div className="fixed bottom-8 right-8 flex items-end gap-1 pointer-events-none hidden lg:flex">
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={`spectrum-${i}`}
+            className="w-2 bg-neon-pink/40 rounded-sm"
+            animate={{
+              height: [30 - i * 4, 10 + i * 4, 30 - i * 4],
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{
+              duration: 1.2,
+              delay: i * 0.15,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Pulsing Beat Circles */}
+      {[...Array(3)].map((_, i) => (
         <motion.div
-          key={`star-${i}`}
-          className="fixed w-1 h-1 bg-white rounded-full pointer-events-none"
+          key={`beat-${i}`}
+          className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border pointer-events-none"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            boxShadow: "0 0 6px 2px rgba(255,255,255,0.3)",
+            borderColor:
+              i === 0
+                ? "rgba(255,107,53,0.2)"
+                : i === 1
+                ? "rgba(255,64,129,0.15)"
+                : "rgba(0,229,255,0.1)",
           }}
           animate={{
-            opacity: [0.2, 0.8, 0.2],
-            scale: [1, 1.5, 1],
+            width: [100 + i * 50, 300 + i * 100, 100 + i * 50],
+            height: [100 + i * 50, 300 + i * 100, 100 + i * 50],
+            opacity: [0.3, 0.1, 0.3],
           }}
           transition={{
-            duration: 2 + Math.random() * 2,
-            delay: Math.random() * 2,
+            duration: 2 + i * 0.5,
+            delay: i * 0.3,
             repeat: Infinity,
             ease: "easeInOut",
           }}

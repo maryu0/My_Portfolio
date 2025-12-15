@@ -22,7 +22,7 @@ const Hero = () => {
             <ChevronLeft size={48} strokeWidth={3} />
           </motion.button>
 
-          {/* Year Badge */}
+          {/* Badge */}
           <motion.div
             className="absolute top-12 right-12 text-right"
             initial={{ opacity: 0, x: 50 }}
@@ -31,9 +31,6 @@ const Hero = () => {
           >
             <div className="font-mono text-sm text-neon-orange tracking-widest">
               SOFTWARE DEVELOPER
-            </div>
-            <div className="font-display text-6xl text-album-beige mt-2">
-              2019
             </div>
           </motion.div>
 
