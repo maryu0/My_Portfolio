@@ -371,11 +371,11 @@ const Skills = () => {
 
                 {/* Supporting Skills - Horizontal Chip Row */}
                 {supportingSkills.length > 0 && (
-                  <div className="mt-6">
-                    <p className="text-sm text-album-beige/50 font-mono mb-4 uppercase tracking-wider">
+                  <div className="mt-8 p-6 rounded-xl bg-vinyl-light/50 border-2 border-vinyl-accent/50">
+                    <p className="text-lg text-album-paper font-mono mb-5 uppercase tracking-wider font-semibold">
                       Also Experienced With
                     </p>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-4">
                       {supportingSkills.map((skill, idx) => (
                         <motion.div
                           key={skill.name}
@@ -389,12 +389,12 @@ const Skills = () => {
                           className="group"
                         >
                           <div
-                            className={`flex items-center gap-2 px-4 py-2 rounded-full bg-vinyl-light border border-vinyl-accent hover:${colors.border} transition-all duration-300`}
+                            className={`flex items-center gap-3 px-5 py-3 rounded-lg bg-vinyl-dark border-2 border-vinyl-accent hover:${colors.border} hover:shadow-lg transition-all duration-300`}
                           >
                             <img
                               src={skill.icon}
                               alt={skill.name}
-                              className="w-5 h-5 object-contain"
+                              className="w-7 h-7 object-contain"
                               style={{
                                 filter:
                                   skill.icon.includes("express") ||
@@ -405,7 +405,7 @@ const Skills = () => {
                               }}
                             />
                             <span
-                              className={`text-sm font-mono text-album-beige group-hover:${colors.text} transition-colors`}
+                              className={`text-base font-mono font-semibold text-album-paper group-hover:${colors.text} transition-colors`}
                             >
                               {skill.name}
                             </span>
