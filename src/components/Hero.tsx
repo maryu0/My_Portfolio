@@ -1,11 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Github,
-  Linkedin,
-  Download,
-} from "lucide-react";
+import { ChevronRight, Github, Linkedin, Download } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -13,27 +7,6 @@ const Hero = () => {
       {/* Large Name Display */}
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center justify-center space-y-8">
-          {/* Navigation Arrows */}
-          <motion.button
-            className="absolute left-8 top-1/2 -translate-y-1/2 text-neon-orange hover:text-neon-pink transition-colors"
-            whileHover={{ scale: 1.1, x: -5 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ChevronLeft size={48} strokeWidth={3} />
-          </motion.button>
-
-          {/* Badge */}
-          <motion.div
-            className="absolute top-12 right-12 text-right"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <div className="font-mono text-sm text-neon-orange tracking-widest">
-              SOFTWARE DEVELOPER
-            </div>
-          </motion.div>
-
           {/* Main Name - Large Bold Typography */}
           <div className="text-center relative">
             <motion.div
@@ -136,93 +109,38 @@ const Hero = () => {
             </motion.a>
           </motion.div>
 
-          {/* Scroll Indicator */}
+          {/* CTA Buttons */}
           <motion.div
-            className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center"
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col sm:flex-row gap-4 mt-12 z-50 relative"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1 }}
           >
-            <div className="font-mono text-xs text-album-beige/60 tracking-widest">
-              SCROLL TO EXPLORE
-            </div>
-            <div className="w-[2px] h-16 bg-gradient-to-b from-neon-orange to-transparent mx-auto mt-4" />
-          </motion.div>
-
-          {/* Next Arrow */}
-          <motion.button
-            className="absolute right-8 top-1/2 -translate-y-1/2 text-neon-orange hover:text-neon-pink transition-colors"
-            whileHover={{ scale: 1.1, x: 5 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <ChevronRight size={48} strokeWidth={3} />
-          </motion.button>
-
-          {/* Corner Decorations - Menu Indicator */}
-          <div className="absolute top-12 left-12">
-            <div className="font-mono text-xs text-album-beige/60 tracking-widest">
-              01 / 05
-            </div>
-            <div className="w-12 h-[2px] bg-neon-orange mt-2" />
-          </div>
-
-          {/* Circular Navigation Indicator - Top Right */}
-          <motion.div
-            className="absolute top-12 right-12 text-neon-orange"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          >
-            <svg width="120" height="120" viewBox="0 0 120 120">
-              <circle
-                cx="60"
-                cy="60"
-                r="50"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1"
-                strokeDasharray="4 4"
-                opacity="0.3"
-              />
-              <text
-                x="60"
-                y="65"
-                textAnchor="middle"
-                className="font-mono text-xs fill-current"
-                style={{ letterSpacing: "0.2em" }}
-              >
-                NEXT
-              </text>
-            </svg>
+            <motion.button
+              onClick={() => {
+                const projectsSection = document.getElementById("projects");
+                projectsSection?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-8 py-4 bg-neon-orange hover:bg-neon-pink text-vinyl-dark font-mono tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2 text-lg font-bold"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              VIEW MY WORK
+              <ChevronRight size={20} />
+            </motion.button>
+            <motion.button
+              onClick={() => {
+                const contactSection = document.getElementById("contact");
+                contactSection?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="px-8 py-4 border-2 border-neon-orange text-neon-orange hover:bg-neon-orange hover:text-vinyl-dark font-mono tracking-wider rounded-lg transition-colors flex items-center justify-center gap-2"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              LET'S CONNECT
+            </motion.button>
           </motion.div>
         </div>
-      </div>
-
-      {/* Listen to the Next Project Text (Rotating) */}
-      <div className="absolute bottom-24 right-24">
-        <motion.div
-          className="relative w-32 h-32"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          <svg viewBox="0 0 100 100" className="w-full h-full">
-            <defs>
-              <path
-                id="circle"
-                d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-              />
-            </defs>
-            <text className="text-[8px] fill-neon-orange font-mono tracking-wider">
-              <textPath xlinkHref="#circle">
-                LISTEN TO THE NEXT PROJECT •
-              </textPath>
-            </text>
-          </svg>
-          <motion.div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8"
-            whileHover={{ scale: 1.2 }}
-          >
-            <ChevronRight className="text-neon-orange" size={32} />
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );
