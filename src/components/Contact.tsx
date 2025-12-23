@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Send, Mail, MapPin, Linkedin, Github, Twitter } from "lucide-react";
+import { Send, Mail, MapPin, Linkedin, Github } from "lucide-react";
 import { useState, FormEvent } from "react";
 
 const Contact = () => {
@@ -33,19 +33,21 @@ const Contact = () => {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="font-mono text-sm text-neon-orange tracking-widest">
+            <div className="font-mono text-xs sm:text-sm text-neon-orange tracking-widest">
               GET IN TOUCH
             </div>
             <div className="flex-1 h-[2px] bg-gradient-to-r from-neon-orange to-transparent" />
           </div>
-          <h2 className="font-display text-7xl text-album-paper">CONTACT</h2>
-          <p className="text-album-beige/70 font-mono mt-4 max-w-2xl">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-album-paper">
+            CONTACT
+          </h2>
+          <p className="text-album-beige/70 font-mono mt-4 max-w-2xl text-sm sm:text-base">
             Let's collaborate on your next project. Drop me a message and I'll
             get back to you.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12">
           {/* Contact Form - Album Liner Notes Style */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -160,7 +162,7 @@ const Contact = () => {
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            className="space-y-4 sm:space-y-6"
           >
             {/* Info Cards */}
             {[
@@ -204,20 +206,22 @@ const Contact = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-vinyl-light border border-vinyl-accent hover:border-neon-orange transition-all duration-300 rounded-lg p-6 group cursor-pointer block"
+                className="bg-vinyl-light border border-vinyl-accent hover:border-neon-orange transition-all duration-300 rounded-lg p-4 sm:p-6 group cursor-pointer block"
                 whileHover={{ x: 10 }}
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div
-                    className={`w-12 h-12 rounded-full bg-${color}/20 border-2 border-${color} flex items-center justify-center group-hover:scale-110 transition-transform`}
+                    className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-${color}/20 border-2 border-${color} flex items-center justify-center group-hover:scale-110 transition-transform flex-shrink-0`}
                   >
-                    <Icon className={`text-${color}`} size={20} />
+                    <Icon className={`text-${color}`} size={18} />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <div className="font-mono text-xs text-album-beige/60 tracking-wider mb-1">
                       {label}
                     </div>
-                    <div className="text-album-paper font-mono">{value}</div>
+                    <div className="text-album-paper font-mono text-sm sm:text-base truncate">
+                      {value}
+                    </div>
                   </div>
                 </div>
               </motion.a>

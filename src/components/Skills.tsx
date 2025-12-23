@@ -187,15 +187,15 @@ const Skills = () => {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="font-mono text-sm text-neon-orange tracking-widest">
+            <div className="font-mono text-xs sm:text-sm text-neon-orange tracking-widest">
               STUDIO EQUIPMENT
             </div>
             <div className="flex-1 h-[2px] bg-gradient-to-r from-neon-orange to-transparent" />
           </div>
-          <h2 className="font-display text-7xl text-album-paper">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-album-paper">
             INSTRUMENTS
           </h2>
-          <p className="text-album-beige/70 font-mono mt-4 max-w-2xl">
+          <p className="text-album-beige/70 font-mono mt-4 max-w-2xl text-sm sm:text-base">
             The tools and technologies I use to craft digital experiences.
             Mastery through constant practice and iteration.
           </p>
@@ -256,7 +256,7 @@ const Skills = () => {
 
                 {/* Featured Skills - Large Cards with Details */}
                 {featuredSkills.length > 0 && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
                     {featuredSkills.map((skill, idx) => (
                       <motion.div
                         key={skill.name}

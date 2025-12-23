@@ -130,14 +130,14 @@ const ProjectCard = ({
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
       className={`group relative ${
-        project.featured ? "col-span-2" : "col-span-1"
+        project.featured ? "md:col-span-2" : "col-span-1"
       }`}
     >
       <div className="relative bg-vinyl-light border border-vinyl-accent hover:border-neon-orange transition-all duration-300 rounded-lg overflow-hidden">
         {/* Album Art / Project Image */}
         <div
           className={`relative ${
-            project.featured ? "h-80" : "h-64"
+            project.featured ? "h-48 sm:h-64 md:h-80" : "h-48 sm:h-56 md:h-64"
           } overflow-hidden`}
         >
           {/* Background gradient as fallback */}
@@ -281,20 +281,22 @@ const Projects = () => {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="font-mono text-sm text-neon-orange tracking-widest">
+            <div className="font-mono text-xs sm:text-sm text-neon-orange tracking-widest">
               DISCOGRAPHY
             </div>
             <div className="flex-1 h-[2px] bg-gradient-to-r from-neon-orange to-transparent" />
           </div>
-          <h2 className="font-display text-7xl text-album-paper">PROJECTS</h2>
-          <p className="text-album-beige/70 font-mono mt-4 max-w-2xl">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-album-paper">
+            PROJECTS
+          </h2>
+          <p className="text-album-beige/70 font-mono mt-4 max-w-2xl text-sm sm:text-base">
             A collection of my favorite tracks. Each project tells a unique
             story, built with passion and precision.
           </p>
         </motion.div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}

@@ -65,13 +65,15 @@ const Experience = () => {
           className="mb-16"
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="font-mono text-sm text-neon-orange tracking-widest">
+            <div className="font-mono text-xs sm:text-sm text-neon-orange tracking-widest">
               TOUR HISTORY
             </div>
             <div className="flex-1 h-[2px] bg-gradient-to-r from-neon-orange to-transparent" />
           </div>
-          <h2 className="font-display text-7xl text-album-paper">EXPERIENCE</h2>
-          <p className="text-album-beige/70 font-mono mt-4 max-w-2xl">
+          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-album-paper">
+            EXPERIENCE
+          </h2>
+          <p className="text-album-beige/70 font-mono mt-4 max-w-2xl text-sm sm:text-base">
             My journey through the tech world. Each stop has shaped who I am
             today.
           </p>
@@ -80,7 +82,7 @@ const Experience = () => {
         {/* Timeline */}
         <div className="relative">
           {/* Vertical Line */}
-          <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-neon-orange via-neon-pink to-neon-cyan" />
+          <div className="absolute left-4 sm:left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-neon-orange via-neon-pink to-neon-cyan" />
 
           {/* Experience Items */}
           {experiences.map((exp, index) => (
@@ -90,25 +92,25 @@ const Experience = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.2 }}
-              className="relative mb-12 pl-20"
+              className="relative mb-12 pl-12 sm:pl-20"
             >
               {/* Timeline Dot */}
               <motion.div
-                className="absolute left-[26px] top-8 w-4 h-4 rounded-full bg-neon-orange border-4 border-vinyl-dark"
+                className="absolute left-[10px] sm:left-[26px] top-8 w-4 h-4 rounded-full bg-neon-orange border-4 border-vinyl-dark"
                 whileInView={{ scale: [1, 1.3, 1] }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2 + 0.3, duration: 0.5 }}
               />
 
               {/* Content Card */}
-              <div className="bg-vinyl-light border border-vinyl-accent hover:border-neon-orange transition-all duration-300 rounded-lg p-6">
+              <div className="bg-vinyl-light border border-vinyl-accent hover:border-neon-orange transition-all duration-300 rounded-lg p-4 sm:p-6">
                 {/* Header */}
                 <div className="flex flex-wrap justify-between items-start gap-4 mb-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-album-paper">
+                    <h3 className="text-xl sm:text-2xl font-bold text-album-paper">
                       {exp.role}
                     </h3>
-                    <p className="text-lg text-neon-cyan font-mono mt-1">
+                    <p className="text-base sm:text-lg text-neon-cyan font-mono mt-1">
                       {exp.company}
                     </p>
                   </div>
@@ -121,7 +123,7 @@ const Experience = () => {
                 </div>
 
                 {/* Meta Info */}
-                <div className="flex flex-wrap gap-4 text-sm text-album-beige/70 font-mono mb-4">
+                <div className="flex flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm text-album-beige/70 font-mono mb-4">
                   <div className="flex items-center gap-2">
                     <Calendar size={14} className="text-neon-orange" />
                     {exp.date}
@@ -141,7 +143,7 @@ const Experience = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: index * 0.2 + i * 0.1 }}
-                      className="flex items-start gap-3 text-album-beige/80"
+                      className="flex items-start gap-3 text-sm sm:text-base text-album-beige/80"
                     >
                       <span className="text-neon-orange mt-1">▸</span>
                       <span>{item}</span>
