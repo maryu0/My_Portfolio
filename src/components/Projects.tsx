@@ -26,7 +26,7 @@ const projects: Project[] = [
     duration: "3:45",
     cover: "from-neon-orange to-neon-pink",
     image: "/cashcompass.png",
-    tech: ["React", "Node.js", "MongoDB", "Express"],
+    tech: ["React", "Node.js", "MongoDB", "ML", "Agentic AI"],
     description:
       "A comprehensive finance tracking application to manage and monitor your expenses and budgets",
     github: "https://github.com/maryu0/Cash-Compass.git",
@@ -40,7 +40,7 @@ const projects: Project[] = [
     duration: "4:20",
     cover: "from-neon-blue to-neon-cyan",
     image: "/vriddhi.png",
-    tech: ["React", "Node.js", "MongoDB", "TensorFlow", "CNN"],
+    tech: ["ML", "CNN", "Computer Vision", "React", "Node.js", "MongoDB"],
     description:
       "AI-powered agricultural platform with CNN-based crop disease detection and real-time market insights",
     github: "https://github.com/maryu0/Vriddhi-v2.git",
@@ -54,7 +54,7 @@ const projects: Project[] = [
     duration: "2:30",
     cover: "from-neon-pink to-neon-blue",
     image: "/natours.png",
-    tech: ["HTML5", "SCSS", "CSS Animations"],
+    tech: ["Node.js", "Pug", "Express", "MongoDB"],
     description:
       "Modern responsive landing page for a tour booking website with advanced CSS animations and effects",
     github: "https://github.com/maryu0/Natours.git",
@@ -67,7 +67,7 @@ const projects: Project[] = [
     duration: "3:15",
     cover: "from-neon-cyan to-neon-yellow",
     image: "/forkify.png",
-    tech: ["JavaScript", "Webpack", "API Integration"],
+    tech: ["JavaScript", "API Integration"],
     description:
       "Recipe search application with bookmarking and custom recipe creation features using Forkify API",
     github: "https://github.com/maryu0/Forkify.git",
