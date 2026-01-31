@@ -168,12 +168,12 @@ const Experience = () => {
           className="flex justify-center mt-12"
         >
           <motion.a
-            href="/Ayush_Resume.pdf"
+            href="/Ayush_resume.pdf"
             download="Ayush_Kumar_Resume.pdf"
             onClick={(e) => {
               e.preventDefault();
               const link = document.createElement("a");
-              link.href = "/Ayush_Resume.pdf";
+              link.href = "/Ayush_resume.pdf";
               link.download = "Ayush_Kumar_Resume.pdf";
               document.body.appendChild(link);
               link.click();
