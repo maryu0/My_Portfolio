@@ -48,6 +48,37 @@ const projects: Project[] = [
   },
   {
     id: 3,
+    title: "Layered",
+    artist: "Full Stack Developer",
+    album: "Architecture Analysis",
+    duration: "4:30",
+    cover: "from-neon-purple to-neon-blue",
+    image: "/layered.png",
+    tech: ["Python", "FastAPI", "MongoDB", "React", "TypeScript", "NetworkX"],
+    description:
+      "Architecture drift detection platform that analyzes codebases to infer architectural layers, detect violations, and track software architecture evolution with interactive visualizations",
+    github: "https://github.com/maryu0/Layered.git",
+    live: "https://layered-theta.vercel.app/",
+  },
+  {
+    id: 4,
+    title: "FailSense",
+    artist: "Full Stack Developer",
+    album: "AI Debugging Tool",
+    duration: "3:45",
+    cover: "from-neon-red to-neon-orange",
+    image: "/failsense.png",
+    tech: ["Python", "FastAPI", "Groq AI", "React", "TypeScript", "LLaMA 3.3"],
+    description:
+      "AI-powered error debugging assistant that analyzes application error logs and generates ranked solution suggestions with confidence scores to accelerate debugging workflows",
+    github: "https://github.com/maryu0/FailSense.git",
+    live: "https://fail-sense-oebrcn3dh-maryus-projects-db28d80b.vercel.app/",
+  },
+];
+
+const additionalProjects: Project[] = [
+  {
+    id: 5,
     title: "Natours",
     artist: "Frontend Developer",
     album: "Landing Page",
@@ -60,7 +91,7 @@ const projects: Project[] = [
     github: "https://github.com/maryu0/Natours.git",
   },
   {
-    id: 4,
+    id: 6,
     title: "Forkify",
     artist: "Frontend Developer",
     album: "Recipe App",
@@ -73,11 +104,8 @@ const projects: Project[] = [
     github: "https://github.com/maryu0/Forkify.git",
     live: "https://forkify-maryu.netlify.app/",
   },
-];
-
-const additionalProjects: Project[] = [
   {
-    id: 5,
+    id: 7,
     title: "Bankist Website",
     artist: "Frontend Developer",
     album: "Banking Landing Page",
@@ -89,7 +117,7 @@ const additionalProjects: Project[] = [
     github: "https://github.com/maryu0/Bankist-website.git",
   },
   {
-    id: 6,
+    id: 8,
     title: "Bankist App",
     artist: "Frontend Developer",
     album: "Banking Application",
@@ -101,7 +129,7 @@ const additionalProjects: Project[] = [
     github: "https://github.com/maryu0/Bankist-app.git",
   },
   {
-    id: 7,
+    id: 9,
     title: "Pick Me Game",
     artist: "Frontend Developer",
     album: "Browser Game",
