@@ -31,17 +31,17 @@ const skillCategories: SkillCategory[] = [
       {
         name: "TypeScript",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-        level: 90,
+        level: 95,
         featured: true,
-        projects: ["Portfolio"],
+        projects: ["Layered", "FailSense"],
         description: "Type-safe development for scalable apps",
       },
       {
         name: "Python",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-        level: 90,
+        level: 95,
         featured: true,
-        projects: ["Vriddhi"],
+        projects: ["Layered", "FailSense", "Vriddhi"],
         description: "AI/ML & backend development",
       },
       {
@@ -75,7 +75,7 @@ const skillCategories: SkillCategory[] = [
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
         level: 95,
         featured: true,
-        projects: ["Cash Compass", "Portfolio"],
+        projects: ["Layered", "FailSense", "Cash Compass"],
         description: "Expert in modern React patterns & hooks",
       },
       {
@@ -88,9 +88,9 @@ const skillCategories: SkillCategory[] = [
       {
         name: "Tailwind CSS",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-        level: 90,
+        level: 95,
         featured: true,
-        projects: ["Portfolio", "Cash Compass"],
+        projects: ["Layered", "FailSense", "Portfolio"],
       },
       {
         name: "Bootstrap",
@@ -105,24 +105,24 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "Backend & AI/ML",
+    title: "Backend",
     color: "neon-orange",
     skills: [
-      {
-        name: "Node.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-        level: 90,
-        featured: true,
-        projects: ["Cash Compass", "Vriddhi"],
-        description: "Scalable server-side applications",
-      },
       {
         name: "FastAPI",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
         level: 85,
         featured: true,
-        projects: ["Vriddhi"],
-        description: "High-performance Python APIs",
+        projects: ["Layered", "FailSense"],
+        description: "High-performance async Python APIs",
+      },
+      {
+        name: "Node.js",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+        level: 95,
+        featured: true,
+        projects: ["Cash Compass", "Vriddhi"],
+        description: "Scalable server-side applications",
       },
       {
         name: "Express.js",
@@ -134,6 +134,11 @@ const skillCategories: SkillCategory[] = [
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/graphql/graphql-plain.svg",
         level: 75,
       },
+      {
+        name: "RESTful APIs",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
+        level: 85,
+      },
     ],
   },
   {
@@ -143,9 +148,9 @@ const skillCategories: SkillCategory[] = [
       {
         name: "MongoDB",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-        level: 90,
+        level: 95,
         featured: true,
-        projects: ["Cash Compass", "Vriddhi"],
+        projects: ["Layered", "Cash Compass", "Vriddhi"],
         description: "NoSQL database design & optimization",
       },
       {
@@ -156,14 +161,135 @@ const skillCategories: SkillCategory[] = [
         description: "Containerization & deployment",
       },
       {
-        name: "Git",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-        level: 95,
-      },
-      {
         name: "Kubernetes",
         icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
         level: 75,
+      },
+      {
+        name: "Oracle Cloud",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/oracle/oracle-original.svg",
+        level: 75,
+      },
+      {
+        name: "CI/CD",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
+        level: 80,
+      },
+    ],
+  },
+  {
+    title: "AI & Debugging",
+    color: "neon-cyan",
+    skills: [
+      {
+        name: "AI-Powered Debugging",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 85,
+        featured: true,
+        projects: ["FailSense"],
+        description: "Automated error analysis & solution ranking",
+      },
+      {
+        name: "Large Language Models",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg",
+        level: 85,
+        featured: true,
+        projects: ["FailSense"],
+        description: "LLM integration & optimization",
+      },
+      {
+        name: "Prompt Engineering",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 85,
+        featured: true,
+        description: "AI model interaction & tuning",
+      },
+      {
+        name: "Error Analysis Automation",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 80,
+      },
+      {
+        name: "Agentic Automation",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 75,
+      },
+    ],
+  },
+  {
+    title: "General & Supporting",
+    color: "neon-pink",
+    skills: [
+      {
+        name: "API Design",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
+        level: 95,
+        featured: true,
+        description: "RESTful & scalable API architecture",
+      },
+      {
+        name: "Git & Version Control",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+        level: 95,
+        featured: true,
+        description: "Advanced Git workflows & collaboration",
+      },
+      {
+        name: "Asynchronous Programming",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
+        level: 85,
+        featured: true,
+        description: "Async patterns & concurrency",
+      },
+      {
+        name: "Software Architecture",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 85,
+      },
+      {
+        name: "System Design",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 80,
+      },
+      {
+        name: "Static Code Analysis",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 85,
+      },
+      {
+        name: "Dependency Graph Modeling",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/networkx/networkx-original.svg",
+        level: 85,
+      },
+      {
+        name: "Architecture Drift Detection",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 85,
+      },
+      {
+        name: "Developer Tooling",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",
+        level: 85,
+      },
+      {
+        name: "Graph-Based Analysis",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 80,
+      },
+      {
+        name: "Cloud-Native Development",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg",
+        level: 80,
+      },
+      {
+        name: "Postman API",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",
+        level: 85,
+      },
+      {
+        name: "Automation & Orchestration",
+        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+        level: 80,
       },
     ],
   },
@@ -245,7 +371,7 @@ const Skills = () => {
                 {/* Category Header */}
                 <div className="flex items-center gap-4 mb-10">
                   <h3
-                    className={`text-2xl md:text-3xl font-bold ${colors.text} font-mono tracking-wider`}
+                    className={`text-xl md:text-2xl font-bold ${colors.text} font-mono tracking-wider`}
                   >
                     {category.title}
                   </h3>
@@ -304,7 +430,7 @@ const Skills = () => {
                                 />
                               </div>
                               <div className="flex-1">
-                                <h4 className="text-xl font-bold text-album-paper mb-1">
+                                <h4 className="text-lg font-bold text-album-paper mb-1">
                                   {skill.name}
                                 </h4>
                                 {skill.description && (
@@ -372,7 +498,7 @@ const Skills = () => {
                 {/* Supporting Skills - Horizontal Chip Row */}
                 {supportingSkills.length > 0 && (
                   <div className="mt-8 p-6 rounded-xl bg-vinyl-light/50 border-2 border-vinyl-accent/50">
-                    <p className="text-lg text-album-paper font-mono mb-5 uppercase tracking-wider font-semibold">
+                    <p className="text-base text-album-paper font-mono mb-5 uppercase tracking-wider font-semibold">
                       Also Experienced With
                     </p>
                     <div className="flex flex-wrap gap-4">
@@ -405,7 +531,7 @@ const Skills = () => {
                               }}
                             />
                             <span
-                              className={`text-base font-mono font-semibold text-album-paper group-hover:${colors.text} transition-colors`}
+                              className={`text-sm font-mono font-semibold text-album-paper group-hover:${colors.text} transition-colors`}
                             >
                               {skill.name}
                             </span>

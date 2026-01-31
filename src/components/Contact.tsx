@@ -7,19 +7,111 @@ const Contact = () => {
     name: "",
     email: "",
     message: "",
+    honeypot: "", // Spam protection
   });
 
   const [isSending, setIsSending] = useState(false);
+  const [status, setStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors = {
+      name: "",
+      email: "",
+      message: "",
+    };
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    }
+
+    setErrors(newErrors);
+    return !Object.values(newErrors).some((error) => error !== "");
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    // Reset status
+    setStatus({ type: null, message: "" });
+
+    // Honeypot check - if filled, it's a bot
+    if (formData.honeypot) {
+      return;
+    }
+
+    // Validate form
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSending(true);
 
-    // Simulate sending
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    try {
+      // Use different API URL based on environment
+      const apiUrl = import.meta.env.DEV
+        ? "http://localhost:3001/api/contact"
+        : "/api/contact";
 
-    setIsSending(false);
-    setFormData({ name: "", email: "", message: "" });
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus({
+          type: "success",
+          message: "Message sent successfully! I'll get back to you soon.",
+        });
+        setFormData({ name: "", email: "", message: "", honeypot: "" });
+        setErrors({ name: "", email: "", message: "" });
+      } else {
+        setStatus({
+          type: "error",
+          message: data.error || "Failed to send message. Please try again.",
+        });
+      }
+    } catch (error) {
+      setStatus({
+        type: "error",
+        message: "Network error. Please check your connection and try again.",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
@@ -77,6 +169,35 @@ const Contact = () => {
                   LINER NOTES
                 </h3>
 
+                {/* Status Messages */}
+                {status.type && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`p-4 rounded-lg border-2 ${
+                      status.type === "success"
+                        ? "bg-neon-cyan/10 border-neon-cyan text-neon-cyan"
+                        : "bg-neon-pink/10 border-neon-pink text-neon-pink"
+                    } font-mono text-sm`}
+                  >
+                    {status.message}
+                  </motion.div>
+                )}
+
+                {/* Honeypot field - hidden from users */}
+                <input
+                  type="text"
+                  name="honeypot"
+                  value={formData.honeypot}
+                  onChange={(e) =>
+                    setFormData({ ...formData, honeypot: e.target.value })
+                  }
+                  style={{ position: "absolute", left: "-9999px" }}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                />
+
                 {/* Name Field */}
                 <div className="relative">
                   <label className="block font-mono text-xs text-neon-cyan tracking-wider mb-2">
@@ -85,12 +206,23 @@ const Contact = () => {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    className="w-full bg-vinyl-accent border-2 border-vinyl-accent focus:border-neon-orange text-album-paper px-4 py-3 rounded transition-colors outline-none font-mono"
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                      if (errors.name) setErrors({ ...errors, name: "" });
+                    }}
+                    className={`w-full bg-vinyl-accent border-2 ${
+                      errors.name
+                        ? "border-neon-pink"
+                        : "border-vinyl-accent focus:border-neon-orange"
+                    } text-album-paper px-4 py-3 rounded transition-colors outline-none font-mono`}
                     required
+                    disabled={isSending}
                   />
+                  {errors.name && (
+                    <p className="text-neon-pink text-xs font-mono mt-1">
+                      {errors.name}
+                    </p>
+                  )}
                 </div>
 
                 {/* Email Field */}
@@ -101,12 +233,23 @@ const Contact = () => {
                   <input
                     type="email"
                     value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="w-full bg-vinyl-accent border-2 border-vinyl-accent focus:border-neon-orange text-album-paper px-4 py-3 rounded transition-colors outline-none font-mono"
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      if (errors.email) setErrors({ ...errors, email: "" });
+                    }}
+                    className={`w-full bg-vinyl-accent border-2 ${
+                      errors.email
+                        ? "border-neon-pink"
+                        : "border-vinyl-accent focus:border-neon-orange"
+                    } text-album-paper px-4 py-3 rounded transition-colors outline-none font-mono`}
                     required
+                    disabled={isSending}
                   />
+                  {errors.email && (
+                    <p className="text-neon-pink text-xs font-mono mt-1">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
 
                 {/* Message Field */}
@@ -116,13 +259,24 @@ const Contact = () => {
                   </label>
                   <textarea
                     value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
+                    onChange={(e) => {
+                      setFormData({ ...formData, message: e.target.value });
+                      if (errors.message) setErrors({ ...errors, message: "" });
+                    }}
                     rows={6}
-                    className="w-full bg-vinyl-accent border-2 border-vinyl-accent focus:border-neon-orange text-album-paper px-4 py-3 rounded transition-colors outline-none font-mono resize-none"
+                    className={`w-full bg-vinyl-accent border-2 ${
+                      errors.message
+                        ? "border-neon-pink"
+                        : "border-vinyl-accent focus:border-neon-orange"
+                    } text-album-paper px-4 py-3 rounded transition-colors outline-none font-mono resize-none`}
                     required
+                    disabled={isSending}
                   />
+                  {errors.message && (
+                    <p className="text-neon-pink text-xs font-mono mt-1">
+                      {errors.message}
+                    </p>
+                  )}
                 </div>
 
                 {/* Submit Button */}
