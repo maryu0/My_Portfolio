@@ -15,9 +15,20 @@
     }
   }
 
+  @media (max-width: 480px) {
+    :root {
+      font-size: 85%;
+    }
+  }
+
   body {
     @apply bg-vinyl-darker text-album-paper font-body;
     overflow-x: hidden;
+    min-width: 320px;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
