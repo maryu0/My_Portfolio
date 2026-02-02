@@ -2,16 +2,16 @@
 
 A modern, music-themed portfolio website built with React, TypeScript, and Tailwind CSS.
 
-## Features
+## 🎵 Features
 
--  Music player-inspired UI with vinyl aesthetics
--  Bold typography and neon color palette
--  Smooth animations with Framer Motion
--  Fully responsive design
--  Accessible and keyboard-friendly
--  Album cover-inspired project cards
--  Audio visualizer effects
--  Instrument/equipment themed skills section
+- Music player-inspired UI with vinyl aesthetics
+- Bold typography and neon color palette
+- Smooth animations with Framer Motion
+- Fully responsive design
+- Accessible and keyboard-friendly
+- Album cover-inspired project cards
+- Audio visualizer effects
+- Instrument/equipment themed skills section
 
 ## Tech Stack
 
@@ -25,16 +25,19 @@ A modern, music-themed portfolio website built with React, TypeScript, and Tailw
 ## Getting Started
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Start development server:
+
 ```bash
 npm run dev
 ```
 
 3. Build for production:
+
 ```bash
 npm run build
 ```
@@ -49,6 +52,6 @@ npm run build
 
 ## License
 
-MIT
-=======
+# MIT
+
 # My_Portfolio
