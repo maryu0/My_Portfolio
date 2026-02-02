@@ -170,15 +170,6 @@ const Experience = () => {
           <motion.a
             href="/Ayush_resume.pdf"
             download="Ayush_Kumar_Resume.pdf"
-            onClick={(e) => {
-              e.preventDefault();
-              const link = document.createElement("a");
-              link.href = "/Ayush_resume.pdf";
-              link.download = "Ayush_Kumar_Resume.pdf";
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            }}
             className="px-8 py-4 bg-neon-orange text-vinyl-dark hover:bg-neon-pink transition-colors font-mono tracking-wider rounded-lg flex items-center gap-3 cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

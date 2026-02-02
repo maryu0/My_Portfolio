@@ -91,15 +91,6 @@ const Hero = () => {
             <motion.a
               href="/Ayush_resume.pdf"
               download="Ayush_Kumar_Resume.pdf"
-              onClick={(e) => {
-                e.preventDefault();
-                const link = document.createElement("a");
-                link.href = "/Ayush_resume.pdf";
-                link.download = "Ayush_Kumar_Resume.pdf";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-              }}
               className="w-11 h-11 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border-2 border-neon-orange flex items-center justify-center text-neon-orange hover:bg-neon-orange hover:text-vinyl-dark transition-all cursor-pointer touch-manipulation"
               whileHover={{ scale: 1.1, rotate: 15 }}
               whileTap={{ scale: 0.95 }}
